@@ -23,10 +23,14 @@ const Page = () => {
         newList[i].checked = !newList[i].checked;
       }
     }
-    setList(newList)
+    setList(newList);
   };
   return (
     <main className="w-screen h-screen p-4">
+      <head>
+        <title>Lista de Tarefas</title>
+        <meta name="Lista de Tarefas" content="Organizador de tarefas" />
+      </head>
       <div className="flex flex-col items-center">
         <h1 className=" text-3xl">Lista de Tarefas</h1>
 
