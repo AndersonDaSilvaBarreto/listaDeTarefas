@@ -1,25 +1,30 @@
 "use client";
+import { ramdomNumber } from "@/fuctions/randomNumber";
 import { TodoItem } from "@/types/todoItem";
 import { useState } from "react";
 
 const Page = () => {
   const [itemInput, setItemInput] = useState("");
   const [list, setList] = useState<TodoItem[]>([
-    { label: "Fazer dever de casa", checked: false },
-    { label: "Comprar o bolo", checked: false },
+    { label: "Fazer dever de casa", checked: false, id: 1 },
+    { label: "Comprar o bolo", checked: false, id: 2 },
   ]);
+
   const handleAddButton = () => {
     if (itemInput.trim() === "") return;
-    setList([...list, { label: itemInput, checked: false }]);
+    setList([
+      ...list,
+      { label: itemInput, checked: false, id: ramdomNumber() },
+    ]);
     setItemInput("");
   };
-  const deleteItem = (index: number) => {
-    setList(list.filter((item, key) => key !== index));
+  const deleteItem = (id: number) => {
+    setList(list.filter((item) => item.id !== id));
   };
-  const toggleItem = (index: number) => {
+  const toggleItem = (id: number) => {
     let newList = [...list];
     for (let i in newList) {
-      if (index === parseInt(i)) {
+      if (newList[i].id === id) {
         newList[i].checked = !newList[i].checked;
       }
     }
@@ -50,19 +55,19 @@ const Page = () => {
         <p className="my-4">{list.length} itens na lista </p>
 
         <ul className=" list-disc pl-5  ">
-          {list.map((item, index) => (
-            <li key={index}>
+          {list.map((item) => (
+            <li key={item.id}>
               <input
                 type="checkbox"
                 name=""
-                onClick={() => toggleItem(index)}
+                onClick={() => toggleItem(item.id)}
                 id=""
                 checked={item.checked}
                 className="w-6 h-6 mr-6"
               />
-              {item.label} -{" "}
+              {item.label} - {item.id}
               <button
-                onClick={() => deleteItem(index)}
+                onClick={() => deleteItem(item.id)}
                 className="hover:underline"
               >
                 [ deletar ]
